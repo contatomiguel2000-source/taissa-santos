@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+/* Base do Vxora (pedra clara, cartões brancos, cantos bem arredondados, Inter com tracking fechado),
+   com as cores da Taissa: areia, madeira e o marrom 🤎 que ela usa nas legendas. */
+@theme inline {
+  --color-paper: #efebe5;
+  --color-card: #f8f6f2;
+  --color-ink: #1f1a15;
+  --color-night: #1b1612;
+  --color-muted: #5f574d;
+  --color-line: #ddd5ca;
+  --color-accent: #84552f;
+  --color-sand: #e3c9a8;
+  --font-sans: var(--font-inter), "Inter Tight", system-ui, sans-serif;
+  --font-serif: var(--font-instrument), "Instrument Serif", Georgia, serif;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-paper);
+}
+
+/* cursor próprio só com mouse e com a rolagem suave ativa */
+@media (pointer: fine) {
+  html.lenis,
+  html.lenis body,
+  html.lenis a,
+  html.lenis button,
+  html.lenis select,
+  html.lenis input,
+  html.lenis textarea {
+    cursor: none;
+  }
+}
+
+/* utilitário (aceita hover:) — palavra em serifa itálica */
+@utility t-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+@layer components {
+  .t-hero {
+    font-size: clamp(2.6rem, 6.2vw, 5.4rem);
+    line-height: 0.98;
+    font-weight: 500;
+    letter-spacing: -0.045em;
+  }
+  .t-h2 {
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1.04;
+    font-weight: 500;
+    letter-spacing: -0.035em;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: currentColor;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition:
+      opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes riseIn {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes heroIn {
+  from {
+    clip-path: inset(10% 6% 10% 6% round 40px);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 0px);
+  }
+}
+@keyframes menuIn {
+  from {
+    clip-path: circle(0% at calc(100% - 40px) 40px);
+  }
+  to {
+    clip-path: circle(150% at calc(100% - 40px) 40px);
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
